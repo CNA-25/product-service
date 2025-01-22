@@ -1,1 +1,89 @@
-# product-service
+# Product API - E-handelsprojekt  
+
+Detta API hanterar produktinformationen för vår e-handelsplattform som säljer hantverksöl. API:et följer REST-standard och använder unika produktkoder (t.ex. SKU eller artikelnummer) för att identifiera produkter, istället för databas-ID:n.  
+
+## Funktionalitet  
+- Lägg till nya produkter  
+- Hämta information om produkter  
+- Uppdatera produktinformation  
+- Ta bort produkter  
+
+## Endpoints  
+
+### Hämta alla produkter  
+**GET /api/products**  
+- **Beskrivning:** Hämtar en lista över alla produkter.  
+- **Svarsexempel:**
+{
+    "sku": "123-ABC",
+    "name": "Pale Ale", 
+    "price": 59.99,
+    "description": "En fruktig och frisk pale ale."
+    },
+    {
+    "sku": "456-DEF",
+    "name": "Stout",
+    "price": 69.99,
+    "description": "En fyllig och mörk stout."
+    }
+  ]
+
+### Hämta en specifik produkt
+**GET /api/products/{sku}**
+- **Beskrivning:** Hämtar information om en specifik produkt baserat på dess SKU.
+- **Exempel:** GET /api/products/123-ABC
+- **Svarsexempel:**
+{
+    "sku": "123-ABC",
+    "name": "Pale Ale",
+    "price": 59.99,
+    "description": "En fruktig och frisk pale ale."
+}
+
+### Lägg till en ny produkt
+**POST /api/products**
+- **Beskrivning:** Lägger till en ny produkt.
+- **Begäransexempel:**
+{
+    "sku": "789-GHI",
+    "name": "IPA", 
+    "price": 64.99,
+    "description": "En kraftig och humlearomatisk IPA."
+}
+**Svarsexempel:**
+{
+    "message": "Produkten har lagts till.",
+    "product": {
+    "sku": "789-GHI",
+    "name": "IPA",
+    "price": 64.99
+  }
+}
+
+### Uppdatera en produkt
+**PUT /api/products/{sku}***
+- **Beskrivning:** Uppdaterar information om en befintlig produkt baserat på dess SKU.
+- **Exempel:** PUT /api/products/123-ABC
+- **Begäransexempel:**
+{
+    "name": "Pale Ale Special Edition",
+    "price": 69.99
+}
+**Svarsexempel:**
+{
+    "message": "Produkten har uppdaterats.",
+    "product": {
+    "sku": "123-ABC",
+    "name": "Pale Ale Special Edition",
+    "price": 69.99
+  }
+}
+
+### Ta bort en produkt
+**DELETE /api/products/{sku}**
+- **Beskrivning:** Tar bort en produkt baserat på dess SKU.
+- **Exempel:** DELETE /api/products/123-ABC
+- **Svarsexempel:**
+{
+        "message": "Produkten har tagits bort."
+}
