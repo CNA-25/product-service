@@ -84,10 +84,9 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "created_at": 01:01:2024:20:54,
     "updated_at": 01:01:2024:20:54
   }
+}
 ```
   
-}
-
 ### Uppdatera en produkt
 **PUT /api/products/{sku}***
 - **Beskrivning:** Uppdaterar information om en befintlig produkt baserat på dess SKU.
