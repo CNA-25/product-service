@@ -18,13 +18,15 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "sku": "123-ABC",
     "name": "Pale Ale", 
     "price": 59.99,
-    "description": "En fruktig och frisk pale ale."
+    "description": "En fruktig och frisk pale ale.",
+    "image": "path-to-image"
     },
     {
     "sku": "456-DEF",
     "name": "Stout",
     "price": 69.99,
-    "description": "En fyllig och mörk stout."
+    "description": "En fyllig och mörk stout.",
+    "image": "path-to-image"
     }
   ]
 
@@ -37,7 +39,8 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "sku": "123-ABC",
     "name": "Pale Ale",
     "price": 59.99,
-    "description": "En fruktig och frisk pale ale."
+    "description": "En fruktig och frisk pale ale.",
+    "image": "path-to-image"
 }
 
 ### Lägg till en ny produkt
@@ -48,15 +51,18 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "sku": "789-GHI",
     "name": "IPA", 
     "price": 64.99,
-    "description": "En kraftig och humlearomatisk IPA."
+    "description": "En kraftig och humlearomatisk IPA.",
+    "image": "path-to-image"
 }
 **Svarsexempel:**
 {
     "message": "Produkten har lagts till.",
     "product": {
     "sku": "789-GHI",
-    "name": "IPA",
-    "price": 64.99
+    "name": "IPA", 
+    "price": 64.99,
+    "description": "En kraftig och humlearomatisk IPA.",
+    "image": "path-to-image"
   }
 }
 
@@ -73,9 +79,11 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 {
     "message": "Produkten har uppdaterats.",
     "product": {
-    "sku": "123-ABC",
-    "name": "Pale Ale Special Edition",
-    "price": 69.99
+    "sku": "789-GHI",
+    "name": "IPA", 
+    "price": 64.99,
+    "description": "En kraftig och humlearomatisk IPA.",
+    "image": "path-to-image"
   }
 }
 
