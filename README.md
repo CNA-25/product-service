@@ -19,14 +19,18 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "name": "Pale Ale", 
     "price": 59.99,
     "description": "En fruktig och frisk pale ale.",
-    "image": "path-to-image"
+    "image": "path-to-image",
+    "created_at": 01:01:2024:20:54,
+    "updated_at": 01:01:2024:20:54
     },
     {
     "sku": "456-DEF",
     "name": "Stout",
     "price": 69.99,
     "description": "En fyllig och mörk stout.",
-    "image": "path-to-image"
+    "image": "path-to-image",
+    "created_at": 01:01:2024:20:54,
+    "updated_at": 01:01:2024:20:54
     }
   ]
 
@@ -40,7 +44,9 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "name": "Pale Ale",
     "price": 59.99,
     "description": "En fruktig och frisk pale ale.",
-    "image": "path-to-image"
+    "image": "path-to-image",
+    "created_at": 01:01:2024:20:54,
+    "updated_at": 01:01:2024:20:54
 }
 
 ### Lägg till en ny produkt
@@ -62,7 +68,9 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "name": "IPA", 
     "price": 64.99,
     "description": "En kraftig och humlearomatisk IPA.",
-    "image": "path-to-image"
+    "image": "path-to-image",
+    "created_at": 01:01:2024:20:54,
+    "updated_at": 01:01:2024:20:54
   }
 }
 
@@ -83,7 +91,9 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
     "name": "IPA", 
     "price": 64.99,
     "description": "En kraftig och humlearomatisk IPA.",
-    "image": "path-to-image"
+    "image": "path-to-image",
+    "created_at": 01:01:2024:20:54,
+    "updated_at": 01:01:2024:20:54
   }
 }
 
