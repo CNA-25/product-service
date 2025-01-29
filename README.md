@@ -156,7 +156,7 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
   - L → Lager
   - A → Ale
   - I → IPA
-  - S → Stout
+  - S → Stout & Porter
   - W → Veteöl
   - P → Pilsner
   - O → Suröl & Specialöl
