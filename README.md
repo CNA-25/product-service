@@ -128,3 +128,44 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
         "message": "Produkten har tagits bort."
 }
 ```
+
+## Produktkoder
+
+### Format
+- 123-ABC
+### Hur produktkoden byggs upp
+**Siffrorna (123)**
+- **Id** för produkter i denna kategori
+    - 100-999
+
+**Bokstäverna (ABC)**
+- **Landskoder** (första två bokstäverna)
+  - US → USA
+  - GE → Tyskland
+  - BE → Belgien
+  - UK → Storbritannien
+  - CZ → Tjeckien
+  - MX → Mexiko
+  - JP → Japan
+  - CA → Kanada
+  - NL → Nederländerna
+  - AU → Australien
+  - IE → Irland
+  
+- **Ölstilkoder** (tredje bokstaven)
+  - L → Lager
+  - A → Ale
+  - I → IPA
+  - S → Stout
+  - W → Veteöl
+  - P → Pilsner
+  - O → Suröl & Specialöl
+
+ ### Exempel på produktkoder & tolkningar
+- 101-USL → Amerikansk Lager
+- 310-BEA → Belgisk Ale
+- 843-GEI → Tysk IPA
+- 625-IES → Irländsk Stout
+- 420-CZW → Tjeckiskt Veteöl
+- 625-MXP → Mexikansk Pilsner
+  
