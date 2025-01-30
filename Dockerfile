@@ -1,29 +1,21 @@
-# Use an official Node.js image
-FROM node:18
+# Use the official Node.js image from the Docker Hub as the base image
+FROM node:22
 
-# Set the working directory in the container
+# Create and change to the app directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies (including Prisma)
+# Install the app dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Generate Prisma client
-RUN npx prisma generate
-
-# Run database migrations (optional but recommended)
-RUN npx prisma migrate deploy
-
-# Set environment variables (PORT is required for Rahti)
-ENV PORT=8080
-
-# Expose the port your app runs on
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the application
-CMD ["node", "server.js"]
+# Define the command to run the app
+CMD ["sh", "-c", "if [ \"$MODE\" = 'development' ]; then npm run dev; else npm start; fi"]
+#CMD ["sh", "-c", "npm run dev"]
