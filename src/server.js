@@ -14,7 +14,7 @@ app.use(cors({
 }));
 
 app.get("/", (req, res) => {
-    res.send("<h1>Hello!!!</h1>");
+    res.send("<h1>Hello Product Service Fam!!!</h1>");
 });
 
 app.listen(PORT, () => {
