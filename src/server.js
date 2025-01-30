@@ -1,19 +1,22 @@
-// Import necessary modules
-const express = require("express");
-require("dotenv").config();
+const express = require('express')
+const app = express()
+require('dotenv').config()
+const PORT = process.env.PORT || 8080
 
-// Initialize express app
-const app = express();
+console.log(`Node.js ${process.version}`)
 
-// Define the port (from environment variable or default to 8080)
-const PORT = process.env.PORT || 8080;
+app.use(express.json())
 
-// Set up a route to respond with a message
-app.get("/", (req, res) => {
-    res.send("<h1>Welcome to the Product Service API!</h1>");
-});
+app.get('/', (req, res) => {
+    res.json({ msg: "Rahti2 node 0.2" })
+})
 
-// Start the server
+
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+    try {
+        console.log(`Running on http://localhost:${PORT}`)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+    
+})
