@@ -1,9 +1,11 @@
-**/node_modules/
-.git
-npm-debug.log
-.coverage
-.coverage.*
-.env
-.aws
-.vscode
-.devcontainer
+services:
+  node-app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+    environment:
+      - MODE
