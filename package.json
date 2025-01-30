@@ -1,33 +1,30 @@
 {
   "name": "product-service",
   "version": "1.0.0",
-  "description": "Detta API hanterar produktinformationen för vår e-handelsplattform som säljer hantverksöl. API:et följer REST-standard och använder unika produktkoder (t.ex. SKU eller artikelnummer) för att identifiera produkter, istället för databas-ID:n.",
-  "main": "src/+server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx prisma generate && node src/server.js",
-    "dev": "nodemon -L src/server.js"
+    "dev": "npx prisma generate && nodemon -L src/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CNA-25/product-service.git"
   },
-  "author": "",
+  "author": "Benjamin Lundkvist, Kevin Görgü, Dennis Florström",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CNA-25/product-service/issues"
   },
   "homepage": "https://github.com/CNA-25/product-service#readme",
-  "devDependencies": {
-    "nodemon": "^3.1.7",
-    "prisma": "^6.3.0"
-  },
+  "description": "",
   "dependencies": {
     "@prisma/client": "^6.3.0",
-    "bcrypt": "^5.1.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-    "jsonwebtoken": "^9.0.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "prisma": "^6.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
