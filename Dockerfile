@@ -17,5 +17,5 @@ COPY . .
 EXPOSE 8080
 
 # Define the command to run the app
-CMD ["sh", "-c", "if [ \"$MODE\" = 'development' ]; then npm run dev; else npm start; fi"]
+CMD ["npm", "start"]
 #CMD ["sh", "-c", "npm run dev"]
