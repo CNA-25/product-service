@@ -11,6 +11,8 @@ app.get('/', (req, res) => {
     res.json({ msg: "Rahti2 node 0.2" });
 });
 
+console.log("Testing new webhook");
+
 
 app.listen(PORT, () => {
     try {
