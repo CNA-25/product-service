@@ -8,10 +8,8 @@ console.log(`Node.js ${process.version}`);
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.json({ msg: "Rahti2 node 0.2" });
+    res.json({ msg: "Hej Kevin" });
 });
-
-console.log("Testing new webhook");
 
 
 app.listen(PORT, () => {
