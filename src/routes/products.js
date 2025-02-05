@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Change to SKU?
 // Get a single product by ID
 router.get('/:id', async (req, res) => {
     try {
