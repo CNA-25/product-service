@@ -5,8 +5,6 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-console.log(`Node.js ${process.version}`);
-
 app.use(cors({
     origin: [
         "http://127.0.0.1:5500"
