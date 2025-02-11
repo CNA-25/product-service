@@ -19,7 +19,7 @@ router.get('/', authorize, async (req, res) => {
 router.get('/:sku', authorize, async (req, res) => {
     try {
         const product = await prisma.products.findUnique({
-            where: { sku: parseInt(req.params.sku) },
+            where: { sku: req.params.sku },
         });
         if (product) {
             res.status(200).json({ msg: "Product fetched successfully", product });
@@ -55,7 +55,7 @@ router.put('/:sku', authorize, async (req, res) => {
     try {
         const { sku, name, price, description, image } = req.body;
         const product = await prisma.products.update({
-            where: { sku: parseInt(req.params.sku) },
+            where: { sku: req.params.sku },
             data: {
                 sku,
                 name,
@@ -71,11 +71,11 @@ router.put('/:sku', authorize, async (req, res) => {
     }
 });
 
-// Delete a product by ID (Protected)
+// Delete a product by SKU (Protected)
 router.delete('/:sku', authorize, async (req, res) => {
     try {
         await prisma.products.delete({
-            where: { sku: parseInt(req.params.sku) },
+            where: { sku: req.params.sku },
         });
         res.status(204).send();
     } catch (error) {
