@@ -1,29 +1,37 @@
-@apiURL=
+@apiURL={{$dotenv API_URL}}
+@authToken={{$dotenv TEMP_TOKEN}}
 
-### Hämta alla produkter
+### Hämta alla produkter (Require Auth)
 GET {{apiURL}}products
+Authorization: Bearer {{authToken}}
 
-### Hämta en specifik produkt
-GET {{apiURL}}products/{sku}
+### Hämta en specifik produkt (Require Auth)
+GET {{apiURL}}products/785-GFI
+Authorization: Bearer {{authToken}}
 
-### Lägg till en ny produkt
+### Lägg till en ny produkt (Require Auth)
 POST {{apiURL}}products
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
 
 {
-    "sku": "789-GHI",
+    "sku": "785-GFI",
     "name": "IPA",
-    "price": 64.99,
+    "price": 62.99,
     "description": "En kraftig och humlearomatisk IPA.",
     "image": "path-to-image"
 }
 
-### Uppdatera en produkt
-PUT {{apiURL}}products/{sku}
+### Uppdatera en produkt (Require Auth)
+PUT {{apiURL}}products/785-GFI
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
 
 {
     "name": "Pale Ale Special Edition",
     "price": 69.99
 }
 
-### Ta bort en produkt
-DELETE {{apiURL}}products/{sku}
+### Ta bort en produkt (Require Auth)
+DELETE {{apiURL}}products/785-GFI
+Authorization: Bearer {{authToken}}

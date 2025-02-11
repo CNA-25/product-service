@@ -15,11 +15,11 @@ router.get('/', authorize, async (req, res) => {
     }
 });
 
-// Get a single product by ID (Protected)
-router.get('/:id', authorize, async (req, res) => {
+// Get a single product by SKU (Protected)
+router.get('/:sku', authorize, async (req, res) => {
     try {
         const product = await prisma.products.findUnique({
-            where: { id: parseInt(req.params.id) },
+            where: { sku: parseInt(req.params.sku) },
         });
         if (product) {
             res.status(200).json({ msg: "Product fetched successfully", product });
@@ -51,11 +51,11 @@ router.post('/', authorize, async (req, res) => {
 });
 
 // Update a product by ID (Protected)
-router.put('/:id', authorize, async (req, res) => {
+router.put('/:sku', authorize, async (req, res) => {
     try {
         const { sku, name, price, description, image } = req.body;
         const product = await prisma.products.update({
-            where: { id: parseInt(req.params.id) },
+            where: { sku: parseInt(req.params.sku) },
             data: {
                 sku,
                 name,
@@ -72,10 +72,10 @@ router.put('/:id', authorize, async (req, res) => {
 });
 
 // Delete a product by ID (Protected)
-router.delete('/:id', authorize, async (req, res) => {
+router.delete('/:sku', authorize, async (req, res) => {
     try {
         await prisma.products.delete({
-            where: { id: parseInt(req.params.id) },
+            where: { sku: parseInt(req.params.sku) },
         });
         res.status(204).send();
     } catch (error) {
