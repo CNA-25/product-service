@@ -1,6 +1,7 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const authorize = require("../middleware/auth");
+const upload = require("../middleware/upload");
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -9,9 +10,9 @@ const prisma = new PrismaClient();
 router.get("/", authorize, async (req, res) => {
     try {
         const products = await prisma.products.findMany();
-        res.status(200).json({ msg: "Produkter hämtades", products });
+        res.status(200).json({ msg: "Produkter hämtades.", products });
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid hämtning av produkter", error: error.message });
+        res.status(500).json({ msg: "Fel vid hämtning av produkter.", error: error.message });
     }
 });
 
@@ -22,12 +23,12 @@ router.get("/:sku", authorize, async (req, res) => {
             where: { sku: req.params.sku },
         });
         if (product) {
-            res.status(200).json({ msg: "Produkt hämtades", product });
+            res.status(200).json({ msg: "Produkt hämtades.", product });
         } else {
-            res.status(404).json({ msg: "Produkten hittades inte" });
+            res.status(404).json({ msg: "Produkten hittades inte." });
         }
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid hämtning av produkt", error: error.message });
+        res.status(500).json({ msg: "Fel vid hämtning av produkt.", error: error.message });
     }
 });
 
@@ -49,7 +50,7 @@ router.post("/", authorize, upload.single("image"), async (req, res) => {
 
         res.status(201).json({ msg: "Ny produkt skapades!", product });
     } catch (error) {
-        res.status(400).json({ msg: "Fel vid skapande av produkt", error: error.message });
+        res.status(400).json({ msg: "Fel vid skapande av produkt.", error: error.message });
     }
 });
 
@@ -69,9 +70,9 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
             data,
         });
 
-        res.status(200).json({ msg: "Produkten uppdaterades", product });
+        res.status(200).json({ msg: "Produkten uppdaterades.", product });
     } catch (error) {
-        res.status(400).json({ msg: "Fel vid uppdatering av produkt", error: error.message });
+        res.status(400).json({ msg: "Fel vid uppdatering av produkt.", error: error.message });
     }
 });
 
@@ -83,7 +84,7 @@ router.delete("/:sku", authorize, async (req, res) => {
         });
         res.status(204).send();
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid borttagning av produkt", error: error.message });
+        res.status(500).json({ msg: "Fel vid borttagning av produkt.", error: error.message });
     }
 });
 
