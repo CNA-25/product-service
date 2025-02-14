@@ -17,23 +17,28 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 
 ```
 {
-    "sku": "123-ABC",
-    "name": "Pale Ale",
-    "price": 59.99,
-    "description": "En fruktig och frisk pale ale.",
-    "image": "path-to-image",
-    "created_at": 01:01:2024:20:54,
-    "updated_at": 01:01:2024:20:54
-    },
-    {
-    "sku": "456-DEF",
-    "name": "Stout",
-    "price": 69.99,
-    "description": "En fyllig och mörk stout.",
-    "image": "path-to-image",
-    "created_at": 01:01:2024:20:54,
-    "updated_at": 01:01:2024:20:54
-    }
+    "msg": "Produkter hämtades.",
+    "products": [
+        {
+            "sku": "123-USL",
+            "name": "Pale Ale",
+            "price": 59.99,
+            "description": "En fruktig och frisk pale ale.",
+            "image": "/uploads/pale-ale.jpg",
+            "created_at": "2024-01-01T20:54:00Z",
+            "updated_at": "2024-01-01T20:54:00Z"
+        },
+        {
+            "sku": "456-BEA",
+            "name": "Belgisk Ale",
+            "price": 69.99,
+            "description": "En fyllig och mörk stout.",
+            "image": "/uploads/belgian-ale.jpg",
+            "created_at": "2024-01-01T20:54:00Z",
+            "updated_at": "2024-01-01T20:54:00Z"
+        }
+    ]
+}
 ```
 
 ### Hämta en specifik produkt
@@ -44,46 +49,46 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 
 ```
 {
-    "sku": "123-ABC",
-    "name": "Pale Ale",
-    "price": 59.99,
-    "description": "En fruktig och frisk pale ale.",
-    "image": "path-to-image",
-    "created_at": 01:01:2024:20:54,
-    "updated_at": 01:01:2024:20:54
+    "msg": "Produkt hämtades.",
+    "product": {
+        "sku": "123-USL",
+        "name": "Pale Ale",
+        "price": 59.99,
+        "description": "En fruktig och frisk pale ale.",
+        "image": "/uploads/pale-ale.jpg",
+        "created_at": "2024-01-01T20:54:00Z",
+        "updated_at": "2024-01-01T20:54:00Z"
+    }
 }
 ```
 
 ### Lägg till en ny produkt
 **POST /api/products**
 - **Beskrivning:** Lägger till en ny produkt.
-- **Begäransexempel:**
+- **Begäransexempel (Form-Data):**
 
 ```
-{
-    "sku": "789-GHI",
-    "name": "IPA", 
-    "price": 64.99,
-    "description": "En kraftig och humlearomatisk IPA.",
-    "image": "path-to-image"
-}
+Key: sku, Value: 789-GHI
+Key: name, Value: IPA
+Key: price, Value: 64.99
+Key: description, Value: En kraftig och humlearomatisk IPA.
+Key: image, Value: [UPPLADDAD BILDFIL]
 ```
 
 **Svarsexempel:**
 
 ```
 {
-    "message": "Produkten har lagts till.",
-    "product": 
-    {
-    "sku": "789-GHI",
-    "name": "IPA", 
-    "price": 64.99,
-    "description": "En kraftig och humlearomatisk IPA.",
-    "image": "path-to-image",
-    "created_at": 01:01:2024:20:54,
-    "updated_at": 01:01:2024:20:54
-  }
+    "msg": "Ny produkt skapades!",
+    "product": {
+        "sku": "789-GHI",
+        "name": "IPA",
+        "price": 64.99,
+        "description": "En kraftig och humlearomatisk IPA.",
+        "image": "/uploads/ipa.jpg",
+        "created_at": "2024-01-01T20:54:00Z",
+        "updated_at": "2024-01-01T20:54:00Z"
+    }
 }
 ```
   
@@ -91,29 +96,28 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 **PUT /api/products/{sku}***
 - **Beskrivning:** Uppdaterar information om en befintlig produkt baserat på dess SKU.
 - **Exempel:** PUT /api/products/123-ABC
-- **Begäransexempel:**
+- **Begäransexempel (Form-Data):**
 
 ```
-{
-    "name": "Pale Ale Special Edition",
-    "price": 69.99
-}
+Key: name, Value: Pale Ale Special Edition
+Key: price, Value: 69.99
+Key: image, Value: [NY_UPPLADDAD BILDFIL]
 ```
 
 **Svarsexempel:**
 
 ```
 {
-    "message": "Produkten har uppdaterats.",
+    "msg": "Produkten uppdaterades.",
     "product": {
-    "sku": "789-GHI",
-    "name": "IPA", 
-    "price": 64.99,
-    "description": "En kraftig och humlearomatisk IPA.",
-    "image": "path-to-image",
-    "created_at": 01:01:2024:20:54,
-    "updated_at": 01:01:2024:20:54
-  }
+        "sku": "123-USL",
+        "name": "Pale Ale Special Edition",
+        "price": 69.99,
+        "description": "En fruktig och frisk pale ale.",
+        "image": "/uploads/pale-ale-special.jpg",
+        "created_at": "2024-01-01T20:54:00Z",
+        "updated_at": "2024-01-02T15:00:00Z"
+    }
 }
 ```
 
@@ -127,6 +131,45 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 {
         "message": "Produkten har tagits bort."
 }
+```
+
+### Exempelkod för att skapa ny produkt
+
+```javascript
+const formData = new FormData();
+formData.append("sku", "789-GHI");
+formData.append("name", "IPA");
+formData.append("price", "64.99");
+formData.append("description", "En kraftig och humlearomatisk IPA.");
+formData.append("image", fileInput.files[0]); // Byt till filen
+
+fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products", {
+    method: "POST",
+    headers: { Authorization: `Bearer YOUR_TOKEN_HERE` },
+    body: formData,
+})
+.then(response => response.json())
+.then(data => console.log("Success:", data))
+.catch(error => console.error("Error:", error));
+```
+
+### Exempelkod för att uppdatera produkt
+
+```
+const formData = new FormData();
+formData.append("name", "Updated IPA");
+formData.append("price", "59.99");
+formData.append("description", "Uppdaterad beskrivning.");
+formData.append("image", fileInput.files[0]); // Byt till filen
+
+fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/789-GHI", {
+    method: "PUT",
+    headers: { Authorization: `Bearer YOUR_TOKEN_HERE` },
+    body: formData,
+})
+.then(response => response.json())
+.then(data => console.log("Success:", data))
+.catch(error => console.error("Error:", error));
 ```
 
 ## Produktkoder
