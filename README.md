@@ -101,7 +101,7 @@ Key: image, Value: [UPPLADDAD BILDFIL]
 ```
 Key: name, Value: Pale Ale Special Edition
 Key: price, Value: 69.99
-Key: image, Value: [NY_UPPLADDAD BILDFIL]
+Key: image, Value: [NY UPPLADDAD BILDFIL]
 ```
 
 **Svarsexempel:**
