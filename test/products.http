@@ -15,10 +15,11 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-    "sku": "785-GFI",
-    "name": "IPA",
-    "price": 62.99,
-    "description": "En kraftig och humlearomatisk IPA.",
+    "country": "Spanien",
+    "category": "Ale",
+    "name": "San Miguel Selecta 2",
+    "price": 2.99,
+    "description": "Frisk och maltig lager är ett balanserat och lättdrucket, underjäst öl.",
     "image": "path-to-image"
 }
 
