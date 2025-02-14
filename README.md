@@ -68,7 +68,8 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 - **Begäransexempel (Form-Data):**
 
 ```
-Key: sku, Value: 789-GHI
+Key: country, Value: Spanien
+Key: category, Value: IPA
 Key: name, Value: IPA
 Key: price, Value: 64.99
 Key: description, Value: En kraftig och humlearomatisk IPA.
@@ -81,7 +82,7 @@ Key: image, Value: [UPPLADDAD BILDFIL]
 {
     "msg": "Ny produkt skapades!",
     "product": {
-        "sku": "789-GHI",
+        "sku": "100-ESI",
         "name": "IPA",
         "price": 64.99,
         "description": "En kraftig och humlearomatisk IPA.",
