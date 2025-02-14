@@ -57,8 +57,13 @@ router.post("/", authorize, upload.single("image"), async (req, res) => {
 // Uppdatera en produkt med hjälp av SKU
 router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
     try {
-        const { sku, name, price, description } = req.body;
-        const data = { sku, name, price, description, updated_at: new Date() };
+        const { name, price, description } = req.body;
+        const data = { updated_at: new Date() };
+
+        // Uppdatera endast värden som finns och inte är ""
+        if (name && name.trim() !== "") data.name = name;
+        if (price && price.trim() !== "") data.price = price;
+        if (description && description.trim() !== "") data.description = description;
 
         // Uppdatera bild om ny fil är uppladdad
         if (req.file) {
@@ -75,6 +80,7 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
         res.status(400).json({ msg: "Fel vid uppdatering av produkt.", error: error.message });
     }
 });
+
 
 // Ta bort en produkt med hjälp av SKU
 router.delete("/:sku", authorize, async (req, res) => {
