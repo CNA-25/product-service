@@ -1,26 +1,31 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(cors({
     origin: [
-        "http://127.0.0.1:5500"
+        "http://127.0.0.1:5500",
+        /\.rahtiapp\.fi$/
     ]
 }));
 
+app.use(express.json());
+
+// Visa något på sidan
 app.get("/", (req, res) => {
     console.log(req.myVar);
     res.send("<h1>Hello!!!</h1>");
 });
 
-app.use(express.json());
+// Servera bilder
+app.use("/uploads", express.static("/app/uploads"));
 
-// Import the products route
-const productsRouter = require('./routes/products');
-app.use('/products', productsRouter);
+// Importera products rutten
+const productsRouter = require("./routes/products");
+app.use("/products", productsRouter);
 
 app.listen(PORT, () => {
     try {
