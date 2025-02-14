@@ -155,7 +155,7 @@ fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products", {
 
 ### Exempelkod för att uppdatera produkt
 
-```
+```javascript
 const formData = new FormData();
 formData.append("name", "Updated IPA");
 formData.append("price", "59.99");
