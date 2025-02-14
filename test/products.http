@@ -33,5 +33,5 @@ Content-Type: application/json
 }
 
 ### Ta bort en produkt (Require Auth)
-DELETE {{apiURL}}products/785-GFI
+DELETE {{apiURL}}products/345-ESL
 Authorization: Bearer {{authToken}}

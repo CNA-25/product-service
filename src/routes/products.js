@@ -81,7 +81,6 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
     }
 });
 
-
 // Ta bort en produkt med hjälp av SKU
 router.delete("/:sku", authorize, async (req, res) => {
     try {
