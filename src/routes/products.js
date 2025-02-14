@@ -2,6 +2,7 @@ const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const authorize = require("../middleware/auth");
 const upload = require("../middleware/upload");
+const generateSKU = require("../middleware/generateSKU");
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -33,9 +34,9 @@ router.get("/:sku", authorize, async (req, res) => {
 });
 
 // Skapa en ny produkt
-router.post("/", authorize, upload.single("image"), async (req, res) => {
+router.post("/", authorize, generateSKU(prisma) , upload.single("image"), async (req, res) => {
     try {
-        const { sku, name, price, description } = req.body;
+        const { name, price, description, sku } = req.body;
         const imagePath = req.file ? `/uploads/${req.file.filename}` : null; // Sätt bildsökväg om uppladdad
 
         const product = await prisma.products.create({
