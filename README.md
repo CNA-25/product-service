@@ -147,6 +147,10 @@ Key: image, Value: [NY UPPLADDAD BILDFIL]
 ### Exempelkod för att skapa ny produkt
 
 ```javascript
+
+// Dropdown meny för country (se nedan för länderna)
+// Dropdown meny för category (se nedan för länderna)
+
 const formData = new FormData();
 formData.append('country', country);
 formData.append('category', category);
@@ -182,6 +186,21 @@ fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/${sku}
 .then(response => response.json())
 .then(data => console.log("Success:", data))
 .catch(error => console.error("Error:", error));
+```
+
+### Arrays med länder och kategorier
+
+```javascript
+const countries = [
+  "Argentina", "Asien", "Belgien", "Brasilien", "Chile", "Colombia", "Danmark", "Finland", 
+  "Frankrike", "Indien", "Irland", "Italien", "Japan", "Kanada", "Kina", "Mexiko", "Nederländerna", 
+  "Norge", "Polen", "Ryssland", "Schweiz", "Serbien", "Sydafrika", "Sydkorea", "Spanien", 
+  "Storbritannien", "Tjeckien", "Tyskland", "Ungern", "USA", "Ukraina", "Vietnam", "Österrike"
+];
+
+const categories = [
+  "Ale", "IPA", "Lager", "Pilsner", "Stout & Porter", "Suröl & Specialöl", "Veteöl"
+];
 ```
 
 ## Produktkoder
