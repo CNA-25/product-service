@@ -110,7 +110,7 @@ Key: image, Value: [UPPLADDAD BILDFIL]
 ```
 Key: name, Value: Pale Ale Special Edition
 Key: price, Value: 69.99
-Key: description, Value: En kraftig och humlearomatisk IPA.
+Key: description, Value: En fruktig och frisk pale ale.
 Key: image, Value: [NY UPPLADDAD BILDFIL]
 ```
 
