@@ -37,7 +37,7 @@ const countries = {
     "Ukraina": "UA",
     "Serbien": "RS",
     "Ungern": "HU"
-}
+};
 
 
 const categories = {
@@ -51,7 +51,7 @@ const categories = {
 };
 
 const generateNumber = async (prisma, countryCode, categoryCode) => {
-    let number = 100;
+    let number = 10000;
     let sku;
 
     while (true) {
@@ -67,7 +67,7 @@ const generateNumber = async (prisma, countryCode, categoryCode) => {
 
         number++;
     }
-}
+};
 
 const generateSKU = (prisma) => async (req, res, next) => {
     try {
