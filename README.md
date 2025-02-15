@@ -102,7 +102,7 @@ Key: image, Value: [UPPLADDAD BILDFIL]
 ```
   
 ### Uppdatera en produkt
-**PUT /api/products/{sku}***
+**PUT /api/products/{sku}**
 - **Beskrivning:** Uppdaterar information om en befintlig produkt baserat på dess SKU. Eftersom SKU inte går att ändra, kan man inte ändra land och kategori. 
 - **Exempel:** PUT /api/products/123-ABC
 - **Begäransexempel (Form-Data):**
@@ -110,6 +110,7 @@ Key: image, Value: [UPPLADDAD BILDFIL]
 ```
 Key: name, Value: Pale Ale Special Edition
 Key: price, Value: 69.99
+Key: description, Value: En kraftig och humlearomatisk IPA.
 Key: image, Value: [NY UPPLADDAD BILDFIL]
 ```
 
