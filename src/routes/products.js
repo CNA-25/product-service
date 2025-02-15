@@ -34,7 +34,7 @@ router.get("/:sku", authorize, async (req, res) => {
 });
 
 // Skapa en ny produkt
-router.post("/", authorize, generateSKU(prisma) , upload.single("image"), async (req, res) => {
+router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (req, res) => {
     try {
         const { name, price, description, sku } = req.body;
         const imagePath = req.file ? `/uploads/${req.file.filename}` : null; // Sätt bildsökväg om uppladdad
