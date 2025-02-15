@@ -103,7 +103,7 @@ Key: image, Value: [UPPLADDAD BILDFIL]
   
 ### Uppdatera en produkt
 **PUT /api/products/{sku}***
-- **Beskrivning:** Uppdaterar information om en befintlig produkt baserat på dess SKU.
+- **Beskrivning:** Uppdaterar information om en befintlig produkt baserat på dess SKU. Eftersom SKU inte går att ändra, kan man inte ändra land och kategori. 
 - **Exempel:** PUT /api/products/123-ABC
 - **Begäransexempel (Form-Data):**
 
@@ -170,6 +170,8 @@ fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products", {
 ```
 
 ### Exempelkod för att uppdatera produkt
+
+- **OBS:**Eftersom SKU inte går att ändra, kan man inte ändra land och kategori. 
 
 ```javascript
 const formData = new FormData();
