@@ -46,6 +46,8 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
                 price,
                 description,
                 image: imagePath,
+                country,
+                category
             },
         });
 
