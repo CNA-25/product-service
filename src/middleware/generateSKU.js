@@ -96,8 +96,6 @@ const generateSKU = (prisma) => async (req, res, next) => {
 
         // Attach SKU to request
         req.body.sku = sku;
-        delete req.body.country;
-        delete req.body.category;
 
         next();
     } catch (error) {
