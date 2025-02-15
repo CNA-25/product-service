@@ -33,22 +33,24 @@ router.get("/:sku", authorize, async (req, res) => {
     }
 });
 
-// Skapa en ny produkt
+/// Skapa en ny produkt
 router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (req, res) => {
     try {
-        const { name, price, description, sku } = req.body;
+        const { name, price, description, country, category } = req.body;
         const imagePath = req.file ? `/uploads/${req.file.filename}` : null; // Sätt bildsökväg om uppladdad
 
+        const data = {
+            sku: req.body.sku,
+            name,
+            price,
+            description,
+            image: imagePath,
+            country,
+            category
+        };
+
         const product = await prisma.products.create({
-            data: {
-                sku,
-                name,
-                price,
-                description,
-                image: imagePath,
-                country,
-                category
-            },
+            data,
         });
 
         res.status(201).json({ msg: "Ny produkt skapades!", product });
