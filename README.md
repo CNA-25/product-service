@@ -171,7 +171,7 @@ fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products", {
 
 ### Exempelkod för att uppdatera produkt
 
-- **OBS:**Eftersom SKU inte går att ändra, kan man inte ändra land och kategori. 
+- **OBS:** Eftersom SKU inte går att ändra, kan man inte ändra land och kategori. 
 
 ```javascript
 const formData = new FormData();
