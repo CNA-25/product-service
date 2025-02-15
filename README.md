@@ -24,18 +24,22 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
             "name": "Pale Ale",
             "price": 59.99,
             "description": "En fruktig och frisk pale ale.",
-            "image": "/uploads/pale-ale.jpg",
             "created_at": "2024-01-01T20:54:00Z",
-            "updated_at": "2024-01-01T20:54:00Z"
+            "updated_at": "2024-01-01T20:54:00Z",
+            "image": "/uploads/pale-ale.jpg",
+            "country": "Belgien",
+            "category": Lager
         },
         {
             "sku": "456-BEA",
             "name": "Belgisk Ale",
             "price": 69.99,
             "description": "En fyllig och mörk stout.",
-            "image": "/uploads/belgian-ale.jpg",
             "created_at": "2024-01-01T20:54:00Z",
-            "updated_at": "2024-01-01T20:54:00Z"
+            "updated_at": "2024-01-01T20:54:00Z",
+            "image": "/uploads/pale-ale.jpg",
+            "country": "Belgien",
+            "category": Ale
         }
     ]
 }
@@ -55,9 +59,11 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
         "name": "Pale Ale",
         "price": 59.99,
         "description": "En fruktig och frisk pale ale.",
-        "image": "/uploads/pale-ale.jpg",
         "created_at": "2024-01-01T20:54:00Z",
-        "updated_at": "2024-01-01T20:54:00Z"
+        "updated_at": "2024-01-01T20:54:00Z",
+        "image": "/uploads/pale-ale.jpg",
+        "country": "USA",
+        "category": Ale
     }
 }
 ```
@@ -86,9 +92,11 @@ Key: image, Value: [UPPLADDAD BILDFIL]
         "name": "IPA",
         "price": 64.99,
         "description": "En kraftig och humlearomatisk IPA.",
-        "image": "/uploads/ipa.jpg",
         "created_at": "2024-01-01T20:54:00Z",
-        "updated_at": "2024-01-01T20:54:00Z"
+        "updated_at": "2024-01-01T20:54:00Z",
+        "image": "/uploads/ipa.jpg",
+        "country": "Spanien",
+        "category": "IPA"
     }
 }
 ```
@@ -115,9 +123,11 @@ Key: image, Value: [NY UPPLADDAD BILDFIL]
         "name": "Pale Ale Special Edition",
         "price": 69.99,
         "description": "En fruktig och frisk pale ale.",
-        "image": "/uploads/pale-ale-special.jpg",
         "created_at": "2024-01-01T20:54:00Z",
-        "updated_at": "2024-01-02T15:00:00Z"
+        "updated_at": "2024-01-02T15:00:00Z",
+        "image": "/uploads/pale-ale-special.jpg",
+        "country": "USA",
+        "category": "Ale"
     }
 }
 ```
@@ -138,7 +148,8 @@ Key: image, Value: [NY UPPLADDAD BILDFIL]
 
 ```javascript
 const formData = new FormData();
-formData.append("sku", "789-GHI");
+formData.append('country', country);
+formData.append('category', category);
 formData.append("name", "IPA");
 formData.append("price", "64.99");
 formData.append("description", "En kraftig och humlearomatisk IPA.");
@@ -163,7 +174,7 @@ formData.append("price", "59.99");
 formData.append("description", "Uppdaterad beskrivning.");
 formData.append("image", fileInput.files[0]); // Byt till filen
 
-fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/789-GHI", {
+fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/${sku}", {
     method: "PUT",
     headers: { Authorization: `Bearer YOUR_TOKEN_HERE` },
     body: formData,
@@ -176,11 +187,11 @@ fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/789-GH
 ## Produktkoder
 
 ### Format
-- 123-ABC
+- 12345-ABC
 ### Hur produktkoden byggs upp
-**Siffrorna (123)**
+**Siffrorna (12345)**
 - **Id** för produkter i denna kategori
-    - 100-999
+    - 10000-99999
 
 **Bokstäverna (ABC)**
 - **Landskoder** (första två bokstäverna)
@@ -206,10 +217,10 @@ fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/789-GH
   - O → Suröl & Specialöl
 
  ### Exempel på produktkoder & tolkningar
-- 101-USL → Amerikansk Lager
-- 310-BEA → Belgisk Ale
-- 843-GEI → Tysk IPA
-- 625-IES → Irländsk Stout
-- 420-CZW → Tjeckiskt Veteöl
-- 625-MXP → Mexikansk Pilsner
+- 10001-USL → Amerikansk Lager
+- 31000-BEA → Belgisk Ale
+- 84300-GEI → Tysk IPA
+- 62500-IES → Irländsk Stout
+- 42000-CZW → Tjeckiskt Veteöl
+- 62500-MXP → Mexikansk Pilsner
   
