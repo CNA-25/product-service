@@ -137,6 +137,8 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
             category
         };
 
+        if (!stock) res.status(400).json({ msg: "Ange stock", error: error.message });
+
         const product = await prisma.products.create({ data });
 
         const invData = {
