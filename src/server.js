@@ -1,5 +1,5 @@
 const express = require("express");
-const swaggerDocs = require("./swagger/swagger");
+const swaggerDocs = require("./swagger/swagger.js");
 const cors = require("cors");
 require("dotenv").config();
 
