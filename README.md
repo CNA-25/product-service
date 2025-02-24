@@ -28,7 +28,8 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
             "updated_at": "2024-01-01T20:54:00Z",
             "image": "/uploads/pale-ale.jpg",
             "country": "Belgien",
-            "category": Lager
+            "category": Lager,
+            "stock" : 4
         },
         {
             "sku": "456-BEA",
@@ -39,7 +40,8 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
             "updated_at": "2024-01-01T20:54:00Z",
             "image": "/uploads/pale-ale.jpg",
             "country": "Belgien",
-            "category": Ale
+            "category": Ale,
+            "stock" : 11
         }
     ]
 }
@@ -63,7 +65,8 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
         "updated_at": "2024-01-01T20:54:00Z",
         "image": "/uploads/pale-ale.jpg",
         "country": "USA",
-        "category": Ale
+        "category": Ale,
+        "stock" : 13
     }
 }
 ```
@@ -80,6 +83,7 @@ Key: name, Value: IPA
 Key: price, Value: 64.99
 Key: description, Value: En kraftig och humlearomatisk IPA.
 Key: image, Value: [UPPLADDAD BILDFIL]
+Key: stock, Value: 5
 ```
 
 **Svarsexempel:**
@@ -112,6 +116,7 @@ Key: name, Value: Pale Ale Special Edition
 Key: price, Value: 69.99
 Key: description, Value: En fruktig och frisk pale ale.
 Key: image, Value: [NY UPPLADDAD BILDFIL]
+Key: stock, Value: 6
 ```
 
 **Svarsexempel:**
