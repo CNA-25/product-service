@@ -1,5 +1,6 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const { Product } = require("./src/swagger/schemas/Product");
 
 const options = {
     definition: {
@@ -23,6 +24,9 @@ const options = {
                     bearerFormat: "JWT",
                 },
             },
+            schemas: {
+                Product,
+            }
         },
         security: [{ bearerAuth: [] }],
     },
