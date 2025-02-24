@@ -145,7 +145,7 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ invData }),
+            body: JSON.stringify(invData),
         });
 
         res.status(201).json({ msg: "Ny produkt skapades!", product });
