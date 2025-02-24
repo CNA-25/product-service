@@ -119,7 +119,6 @@ Key: name, Value: Pale Ale Special Edition
 Key: price, Value: 69.99
 Key: description, Value: En fruktig och frisk pale ale.
 Key: image, Value: [NY UPPLADDAD BILDFIL]
-Key: stock, Value: 6
 ```
 
 **Svarsexempel:**
@@ -167,6 +166,7 @@ formData.append("name", "IPA");
 formData.append("price", "64.99");
 formData.append("description", "En kraftig och humlearomatisk IPA.");
 formData.append("image", fileInput.files[0]); // Byt till filen
+formData.append("stock", 5)
 
 fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products", {
     method: "POST",
