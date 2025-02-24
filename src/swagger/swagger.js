@@ -26,6 +26,8 @@ const options = {
             },
             schemas: {
                 Product,
+                CreateProduct,
+                UpdateProduct,
             }
         },
         security: [{ bearerAuth: [] }],

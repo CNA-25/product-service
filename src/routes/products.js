@@ -93,7 +93,7 @@ router.get("/:sku", authorize, async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             $ref: '#/components/schemas/CreateProduct'
  *     responses:
  *       201:
  *         description: Product created
@@ -140,7 +140,7 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ProductUpdate'
+ *             $ref: '#/components/schemas/UpdateProduct'
  *     responses:
  *       200:
  *         description: Product updated
