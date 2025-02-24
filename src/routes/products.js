@@ -120,7 +120,7 @@ router.get("/:sku", authorize, async (req, res) => {
  */
 router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (req, res) => {
     try {
-        const { name, price, description, country, category } = req.body;
+        const { name, price, description, country, category, stock } = req.body;
         const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
         const data = {
@@ -134,6 +134,19 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
         };
 
         const product = await prisma.products.create({ data });
+
+        const invData = {
+            productCode: req.body.sku,
+            stock: stock
+        }
+
+        await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ invData }),
+        });
 
         res.status(201).json({ msg: "Ny produkt skapades!", product });
     } catch (error) {
