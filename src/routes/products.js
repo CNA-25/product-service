@@ -1,5 +1,6 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
+const axios = require("axios");
 const authorize = require("../middleware/auth");
 const upload = require("../middleware/upload");
 const generateSKU = require("../middleware/generateSKU");
@@ -32,10 +33,29 @@ const prisma = new PrismaClient();
  *               items:
  *                 $ref: '#/components/schemas/Product'
  */
+
+const getAllInventory = async () => {
+    try {
+        const response = await axios.get("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory");
+        return response.data;
+    } catch (error) {
+        res.status(500).json({ msg: "Fel vid hämtning av inventory.", error: error.message });
+        return {}
+    }
+}
+
 router.get("/", authorize, async (req, res) => {
     try {
         const products = await prisma.products.findMany();
-        res.status(200).json({ msg: "Produkter hämtades.", products });
+        const inventoryData = await getAllInventory();
+
+        const productsWithInventory = products.map(product => {
+            const inventory = inventoryData.find(item => item.productCode === product.sku);
+            return { ...product, stock: inventory ? inventory.stock : 0 };
+        });
+
+        res.status(200).json({ msg: "Produkter hämtades.", productsWithInventory });
+
     } catch (error) {
         res.status(500).json({ msg: "Fel vid hämtning av produkter.", error: error.message });
     }
