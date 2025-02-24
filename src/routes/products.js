@@ -222,16 +222,24 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
  */
 router.delete("/:sku", authorize, async (req, res) => {
     try {
+
+        const { sku } = req.params;
+
         await prisma.products.delete({
-            where: { sku: req.params.sku },
+            where: { sku },
         });
 
-        await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
+        const inventoryResponse = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${sku}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             }
         });
+
+        if (!inventoryResponse.ok) {
+            console.error("Failed to delete from inventory:", await inventoryResponse.text());
+            return res.status(500).json({ msg: "Produkten raderades, men inventory kunde inte uppdateras." });
+        }
 
         res.status(204).send();
     } catch (error) {
