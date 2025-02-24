@@ -225,6 +225,14 @@ router.delete("/:sku", authorize, async (req, res) => {
         await prisma.products.delete({
             where: { sku: req.params.sku },
         });
+
+        await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ msg: "Fel vid borttagning av produkt.", error: error.message });
