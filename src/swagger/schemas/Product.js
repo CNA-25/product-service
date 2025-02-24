@@ -23,7 +23,8 @@ module.exports = {
             description: { type: "string", example: "Ugh.", default: "Ugh." },
             image: { type: "string", example: "path-to-image", default: "default-image.jpg" },
             country: { type: "string", example: "Finland", default: "Finland" },
-            category: { type: "string", example: "Lager", default: "Lager" }
+            category: { type: "string", example: "Lager", default: "Lager" },
+            stock: { type: "integer", example: 1 }
         },
         required: ["name", "price", "country", "category"]
     },
