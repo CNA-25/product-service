@@ -6,7 +6,10 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 - Lägg till nya produkter  
 - Hämta information om produkter  
 - Uppdatera produktinformation  
-- Ta bort produkter  
+- Ta bort produkter
+
+## Swagger
+- Adress: https://product-service-cna-product-service.2.rahtiapp.fi/api-docs/
 
 ## Endpoints  
 
