@@ -1,8 +1,10 @@
 const express = require("express");
+const swaggerDocs = require("./src/swagger");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+swaggerDocs(app);
 const PORT = process.env.PORT || 8080;
 
 app.use(cors({
@@ -30,6 +32,7 @@ app.use("/products", productsRouter);
 app.listen(PORT, () => {
     try {
         console.log(`Running on http://localhost:${PORT}`);
+        console.log("Swagger docs available at http://localhost:3000/api-docs");
     } catch (error) {
         console.error(error);
     }

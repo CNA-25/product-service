@@ -7,7 +7,31 @@ const generateSKU = require("../middleware/generateSKU");
 const router = express.Router();
 const prisma = new PrismaClient();
 
-// Hämta alla produkter
+/**
+ * @swagger
+ * tags:
+ *   name: Products
+ *   description: Beer product management
+ */
+
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Get all products
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ */
 router.get("/", authorize, async (req, res) => {
     try {
         const products = await prisma.products.findMany();
@@ -17,7 +41,30 @@ router.get("/", authorize, async (req, res) => {
     }
 });
 
-// Hämta en produkt med hjälp av SKU
+/**
+ * @swagger
+ * /products/{sku}:
+ *   get:
+ *     summary: Get a specific product by SKU
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: sku
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found
+ */
 router.get("/:sku", authorize, async (req, res) => {
     try {
         const product = await prisma.products.findUnique({
@@ -33,11 +80,28 @@ router.get("/:sku", authorize, async (req, res) => {
     }
 });
 
-/// Skapa en ny produkt
+/**
+ * @swagger
+ * /products:
+ *   post:
+ *     summary: Add a new product
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Product'
+ *     responses:
+ *       201:
+ *         description: Product created
+ */
 router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (req, res) => {
     try {
         const { name, price, description, country, category } = req.body;
-        const imagePath = req.file ? `/uploads/${req.file.filename}` : null; // Sätt bildsökväg om uppladdad
+        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
         const data = {
             sku: req.body.sku,
@@ -49,9 +113,7 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
             category
         };
 
-        const product = await prisma.products.create({
-            data,
-        });
+        const product = await prisma.products.create({ data });
 
         res.status(201).json({ msg: "Ny produkt skapades!", product });
     } catch (error) {
@@ -59,18 +121,39 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
     }
 });
 
-// Uppdatera en produkt med hjälp av SKU
+/**
+ * @swagger
+ * /products/{sku}:
+ *   put:
+ *     summary: Update a product by SKU
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: sku
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductUpdate'
+ *     responses:
+ *       200:
+ *         description: Product updated
+ */
 router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
     try {
         const { name, price, description } = req.body;
         const data = { updated_at: new Date() };
 
-        // Uppdatera endast värden som finns och inte är ""
         if (name && name.trim() !== "") data.name = name;
         if (price && price.trim() !== "") data.price = price;
         if (description && description.trim() !== "") data.description = description;
 
-        // Uppdatera bild om ny fil är uppladdad
         if (req.file) {
             data.image = `/uploads/${req.file.filename}`;
         }
@@ -86,7 +169,24 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
     }
 });
 
-// Ta bort en produkt med hjälp av SKU
+/**
+ * @swagger
+ * /products/{sku}:
+ *   delete:
+ *     summary: Delete a product by SKU
+ *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: sku
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Product deleted
+ */
 router.delete("/:sku", authorize, async (req, res) => {
     try {
         await prisma.products.delete({
