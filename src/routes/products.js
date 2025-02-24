@@ -36,13 +36,17 @@ const prisma = new PrismaClient();
 
 const getAllInventory = async () => {
     try {
-        const response = await axios.get("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory");
-        return response.data;
+        const response = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory");
+
+        if (!response.ok) {
+            throw new Error(`Error med inventory! Status: ${response.status}`);
+        }
+
+        return await response.json();
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid hämtning av inventory.", error: error.message });
-        return {}
+        return {}; // Returning empty object in case of an error
     }
-}
+};
 
 router.get("/", authorize, async (req, res) => {
     try {
@@ -229,11 +233,16 @@ router.delete("/:sku", authorize, async (req, res) => {
             where: { sku },
         });
 
-        const inventoryResponse = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${sku}`, {
+        const delData = {
+            productCode: sku
+        }
+
+        const inventoryResponse = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-            }
+            },
+            body: JSON.stringify(delData)
         });
 
         if (!inventoryResponse.ok) {
