@@ -36,7 +36,12 @@ const prisma = new PrismaClient();
 
 const getAllInventory = async () => {
     try {
-        const response = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory");
+        const response = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": process.env.INV_TOKEN
+            },
+        });
 
         if (!response.ok) {
             throw new Error(`Error med inventory! Status: ${response.status}`);
@@ -95,7 +100,21 @@ router.get("/:sku", authorize, async (req, res) => {
             where: { sku: req.params.sku },
         });
         if (product) {
-            res.status(200).json({ msg: "Produkt hämtades.", product });
+            const inventory = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": process.env.INV_TOKEN
+                },
+            });
+
+            if (inventory.ok) {
+                const stock = inventory.stock;
+                res.status(200).json({ msg: "Produkt hämtades.", product: { ...product, stock} });
+            } else {
+                return res.status(500).json({ msg: "Kunde inte hämta saldo." });
+            }
+            
+            
         } else {
             res.status(404).json({ msg: "Produkten hittades inte." });
         }
@@ -245,6 +264,7 @@ router.delete("/:sku", authorize, async (req, res) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": process.env.INV_TOKEN
             },
             body: JSON.stringify(delData)
         });
