@@ -170,10 +170,10 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
 
         const product = await prisma.products.create({ data });
 
-        const invData = {
+        const invData = [{
             productCode: req.body.sku,
             stock: stock
-        }
+        }]
 
         const inventoryResponse = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
             method: "POST",
