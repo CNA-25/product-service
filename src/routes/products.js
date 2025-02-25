@@ -104,14 +104,15 @@ router.get("/:sku", authorize, async (req, res) => {
             where: { sku: req.params.sku },
         });
         if (product) {
-            const inventory = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
+            const inventoryResp = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${process.env.INV_TOKEN}`
                 },
             });
 
-            if (inventory.ok) {
+            if (inventoryResp.ok) {
+                const inventory = await inventoryResp.json();
                 const stock = inventory.stock;
                 res.status(200).json({ msg: "Produkt hämtades.", product: { ...product, stock} });
             } else {
