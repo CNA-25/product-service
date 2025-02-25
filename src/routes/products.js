@@ -175,7 +175,7 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
             stock: stock
         }
 
-        await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
+        const inventoryResponse = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
