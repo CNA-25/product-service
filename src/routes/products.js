@@ -176,6 +176,7 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${process.env.INV_TOKEN}`
             },
             body: JSON.stringify(invData),
         });
