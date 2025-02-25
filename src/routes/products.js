@@ -58,16 +58,16 @@ router.get("/", authorize, async (req, res) => {
         const products = await prisma.products.findMany();
         const inventoryData = await getAllInventory();
 
-        if (inventoryData) {
-            const productsWithInventory = products.map(product => {
-                const inventory = inventoryData.find(item => item.productCode === product.sku);
-                return { ...product, stock: inventory ? inventory.stock : 0 };
-            });
-        } else {
+        if (!inventoryData || !Array.isArray(inventoryData)) {
             return res.status(500).json({ msg: "Fel vid hämtning av saldo." });
         }
 
-        res.status(200).json({ msg: "Produkter hämtades.", productsWithInventory });
+        const productsWithInventory = products.map(product => {
+            const inventory = inventoryData.find(item => item.productCode === product.sku);
+            return { ...product, stock: inventory ? inventory.stock : 0 };
+        });
+
+        res.status(200).json({ msg: "Produkter hämtades.", products: productsWithInventory });
 
     } catch (error) {
         res.status(500).json({ msg: "Fel vid hämtning av produkter.", error: error.message });
