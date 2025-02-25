@@ -39,7 +39,7 @@ const getAllInventory = async () => {
         const response = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": process.env.INV_TOKEN
+                "Authorization": `Bearer ${process.env.INV_TOKEN}`
             },
         });
 
@@ -49,7 +49,7 @@ const getAllInventory = async () => {
 
         return await response.json();
     } catch (error) {
-        return {}; // Returning empty object in case of an error
+        return null; // Returning empty object in case of an error
     }
 };
 
@@ -58,10 +58,14 @@ router.get("/", authorize, async (req, res) => {
         const products = await prisma.products.findMany();
         const inventoryData = await getAllInventory();
 
-        const productsWithInventory = products.map(product => {
-            const inventory = inventoryData.find(item => item.productCode === product.sku);
-            return { ...product, stock: inventory ? inventory.stock : 0 };
-        });
+        if (inventoryData) {
+            const productsWithInventory = products.map(product => {
+                const inventory = inventoryData.find(item => item.productCode === product.sku);
+                return { ...product, stock: inventory ? inventory.stock : 0 };
+            });
+        } else {
+            return res.status(500).json({ msg: "Fel vid hämtning av saldo." });
+        }
 
         res.status(200).json({ msg: "Produkter hämtades.", productsWithInventory });
 
@@ -103,7 +107,7 @@ router.get("/:sku", authorize, async (req, res) => {
             const inventory = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": process.env.INV_TOKEN
+                    "Authorization": `Bearer ${process.env.INV_TOKEN}`
                 },
             });
 
@@ -264,7 +268,7 @@ router.delete("/:sku", authorize, async (req, res) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": process.env.INV_TOKEN
+                "Authorization": `Bearer ${process.env.INV_TOKEN}`
             },
             body: JSON.stringify(delData)
         });
