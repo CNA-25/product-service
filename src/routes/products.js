@@ -49,7 +49,8 @@ const getAllInventory = async () => {
 
         return await response.json();
     } catch (error) {
-        return null; // Returning empty object in case of an error
+        console.error("Misslyckades fetcha inventory:", error);
+        return null; // Return null
     }
 };
 
@@ -59,6 +60,7 @@ router.get("/", authorize, async (req, res) => {
         const inventoryData = await getAllInventory();
 
         if (!inventoryData || !Array.isArray(inventoryData)) {
+            console.error("Fel med hämtning av saldo:", inventoryData);
             return res.status(500).json({ msg: "Fel vid hämtning av saldo." });
         }
 
@@ -116,6 +118,7 @@ router.get("/:sku", authorize, async (req, res) => {
                 const stock = inventory.stock;
                 res.status(200).json({ msg: "Produkt hämtades.", product: { ...product, stock} });
             } else {
+                console.error("Misslyckades hämta saldo:", await inventoryResp.text())
                 return res.status(500).json({ msg: "Kunde inte hämta saldo." });
             }
             
@@ -180,6 +183,11 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
             },
             body: JSON.stringify(invData),
         });
+
+        if (!inventoryResponse.ok) {
+            console.error("Misslyckades uppdatera inventory:", await inventoryResponse.text());
+            return res.status(500).json({ msg: "Produkten skapades, men kunde inte uppdatera lagret." });
+        }
 
         res.status(201).json({ msg: "Ny produkt skapades!", product });
     } catch (error) {
