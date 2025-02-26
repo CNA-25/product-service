@@ -270,9 +270,9 @@ router.delete("/:sku", authorize, async (req, res) => {
             where: { sku },
         });
 
-        const delData = {
+        const delData = [{
             productCode: sku
-        }
+        }]
 
         const inventoryResponse = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/`, {
             method: "DELETE",
