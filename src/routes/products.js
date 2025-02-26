@@ -225,7 +225,7 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
         const data = { updated_at: new Date() };
 
         if (name && name.trim() !== "") data.name = name;
-        if (price && !isNaN(price)) data.price = Number(price);
+        if (price && !isNaN(price)) data.price = price;
         if (description && description.trim() !== "") data.description = description;
 
         if (req.file) {
