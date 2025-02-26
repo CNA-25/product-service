@@ -38,8 +38,7 @@ const getAllInventory = async () => {
     try {
         const response = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.INV_TOKEN}`
+                "Content-Type": "application/json"
             },
         });
 
@@ -108,8 +107,7 @@ router.get("/:sku", async (req, res) => {
         if (product) {
             const inventoryResp = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/${req.params.sku}`, {
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${process.env.INV_TOKEN}`
+                    "Content-Type": "application/json"
                 },
             });
 
