@@ -54,7 +54,7 @@ const getAllInventory = async () => {
     }
 };
 
-router.get("/", authorize, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const products = await prisma.products.findMany();
         const inventoryData = await getAllInventory();
@@ -100,7 +100,7 @@ router.get("/", authorize, async (req, res) => {
  *       404:
  *         description: Product not found
  */
-router.get("/:sku", authorize, async (req, res) => {
+router.get("/:sku", async (req, res) => {
     try {
         const product = await prisma.products.findUnique({
             where: { sku: req.params.sku },
