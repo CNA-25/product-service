@@ -18,59 +18,112 @@ Detta API hanterar produktinformationen för vår e-handelsplattform som säljer
 - **Beskrivning:** Hämtar en lista över alla produkter.  
 - **Svarsexempel:**
 
-```
+```json
 {
-    "msg": "Produkter hämtades.",
-    "products": [
-        {
-            "sku": "123-USL",
-            "name": "Pale Ale",
-            "price": 59.99,
-            "description": "En fruktig och frisk pale ale.",
-            "created_at": "2024-01-01T20:54:00Z",
-            "updated_at": "2024-01-01T20:54:00Z",
-            "image": "/uploads/pale-ale.jpg",
-            "country": "Belgien",
-            "category": Lager,
-            "stock" : 4
-        },
-        {
-            "sku": "456-BEA",
-            "name": "Belgisk Ale",
-            "price": 69.99,
-            "description": "En fyllig och mörk stout.",
-            "created_at": "2024-01-01T20:54:00Z",
-            "updated_at": "2024-01-01T20:54:00Z",
-            "image": "/uploads/pale-ale.jpg",
-            "country": "Belgien",
-            "category": Ale,
-            "stock" : 11
-        }
-    ]
+  "msg": "Produkter hämtades.",
+  "products": [
+    {
+      "id": 47,
+      "sku": "10000-FIL",
+      "name": "Karhu 4,6%",
+      "price": "1",
+      "description": "Gulbrun, medelfyllig, medelstor humlebeska, lätt maltighet, fruktig",
+      "created_at": "2025-02-26T16:26:21.182Z",
+      "updated_at": "2025-02-26T16:26:21.182Z",
+      "image": "/uploads/1740587181163-karhu-46-burk.jpg",
+      "country": "Finland",
+      "category": "Lager",
+      "stock": 88
+    },
+    {
+      "id": 45,
+      "sku": "10000-IES",
+      "name": "Guinness",
+      "price": "4.35",
+      "description": "Mörkbrun, medelfyllig, medelstor humlebeska, grumlig, rostad maltighet, brödig, chokladig, lätt sotighet",
+      "created_at": "2025-02-26T16:24:15.405Z",
+      "updated_at": "2025-02-26T16:27:54.416Z",
+      "image": "/uploads/1740587055366-guinness-draught-stout-burk.jpg",
+      "country": "Irland",
+      "category": "Stout & Porter",
+      "stock": 0
+    }
+  ]
 }
 ```
 
 ### Hämta en specifik produkt
 **GET /api/products/{sku}**
 - **Beskrivning:** Hämtar information om en specifik produkt baserat på dess SKU.
-- **Exempel:** GET /api/products/123-ABC
+- **Exempel:** GET /api/products/10000-FIL
 - **Svarsexempel:**
 
-```
+```json
 {
     "msg": "Produkt hämtades.",
     "product": {
-        "sku": "123-USL",
-        "name": "Pale Ale",
-        "price": 59.99,
-        "description": "En fruktig och frisk pale ale.",
-        "created_at": "2024-01-01T20:54:00Z",
-        "updated_at": "2024-01-01T20:54:00Z",
-        "image": "/uploads/pale-ale.jpg",
-        "country": "USA",
-        "category": Ale,
-        "stock" : 13
+      "id": 47,
+      "sku": "10000-FIL",
+      "name": "Karhu 4,6%",
+      "price": "1",
+      "description": "Gulbrun, medelfyllig, medelstor humlebeska, lätt maltighet, fruktig",
+      "created_at": "2025-02-26T16:26:21.182Z",
+      "updated_at": "2025-02-26T16:26:21.182Z",
+      "image": "/uploads/1740587181163-karhu-46-burk.jpg",
+      "country": "Finland",
+      "category": "Lager",
+      "stock": 88
     }
+}
+```
+
+### Hämta flera produkter med lista av SKU:n
+**POST /api/products/batch**  
+- **Beskrivning:** Hämtar en lista över flera produkter med lista av SKU:n.
+- **Begäransexempel:**
+- 
+```json
+{
+  "product_codes": [
+    "10000-FIL",
+    "10000-FII"
+  ]
+}
+```
+
+- **Svarsexempel:**
+
+```json
+{
+  "msg": "Produkter hämtades.",
+  "products": [
+    {
+      "id": 47,
+      "sku": "10000-FIL",
+      "name": "Karhu 4,6%",
+      "price": "1",
+      "description": "Gulbrun, medelfyllig, medelstor humlebeska, lätt maltighet, fruktig",
+      "created_at": "2025-02-26T16:26:21.182Z",
+      "updated_at": "2025-02-26T16:26:21.182Z",
+      "image": "/uploads/1740587181163-karhu-46-burk.jpg",
+      "country": "Finland",
+      "category": "Lager",
+      "stock": 88
+    },
+    {
+      "id": 44,
+      "sku": "10000-MXL",
+      "name": "Corona Extra",
+      "price": "3",
+      "description": "Ljusgult, lätt, liten humlebeska, sädig, fruktig, kexig, svag örtighet",
+      "created_at": "2025-02-26T16:22:21.366Z",
+      "updated_at": "2025-02-27T09:26:25.719Z",
+      "image": "/uploads/1740586941338-corona-extra.jpg",
+      "country": "Mexiko",
+      "category": "Lager",
+      "stock": 4
+    }
+  ]
 }
 ```
 
@@ -89,21 +142,23 @@ Key: image, Value: [UPPLADDAD BILDFIL]
 Key: stock, Value: 5
 ```
 
-**Svarsexempel:**
+- **Svarsexempel:**
 
-```
+```json
 {
     "msg": "Ny produkt skapades!",
     "product": {
-        "sku": "100-ESI",
-        "name": "IPA",
-        "price": 64.99,
-        "description": "En kraftig och humlearomatisk IPA.",
-        "created_at": "2024-01-01T20:54:00Z",
-        "updated_at": "2024-01-01T20:54:00Z",
-        "image": "/uploads/ipa.jpg",
-        "country": "Spanien",
-        "category": "IPA"
+      "id": 44,
+      "sku": "10000-MXL",
+      "name": "Corona Extra",
+      "price": "3",
+      "description": "Ljusgult, lätt, liten humlebeska, sädig, fruktig, kexig, svag örtighet",
+      "created_at": "2025-02-26T16:22:21.366Z",
+      "updated_at": "2025-02-27T09:26:25.719Z",
+      "image": "/uploads/1740586941338-corona-extra.jpg",
+      "country": "Mexiko",
+      "category": "Lager",
+      "stock": 4
     }
 }
 ```
@@ -121,22 +176,24 @@ Key: description, Value: En fruktig och frisk pale ale.
 Key: image, Value: [NY UPPLADDAD BILDFIL]
 ```
 
-**Svarsexempel:**
+- **Svarsexempel:**
 
-```
+```json
 {
-    "msg": "Produkten uppdaterades.",
-    "product": {
-        "sku": "123-USL",
-        "name": "Pale Ale Special Edition",
-        "price": 69.99,
-        "description": "En fruktig och frisk pale ale.",
-        "created_at": "2024-01-01T20:54:00Z",
-        "updated_at": "2024-01-02T15:00:00Z",
-        "image": "/uploads/pale-ale-special.jpg",
-        "country": "USA",
-        "category": "Ale"
-    }
+  "msg": "Produkten uppdaterades.",
+  "product": {
+    "id": 44,
+    "sku": "10000-MXL",
+    "name": "Pale Ale Special Edition",
+    "price": "69.99",
+    "description": "En fruktig och frisk pale ale.",
+    "created_at": "2025-02-26T16:22:21.366Z",
+    "updated_at": "2025-02-27T09:26:25.719Z",
+    "image": "/uploads/1740586941338-corona-extra.jpg",
+    "country": "Mexiko",
+    "category": "Lager",
+    "stock": 4
+  }
 }
 ```
 
@@ -146,7 +203,7 @@ Key: image, Value: [NY UPPLADDAD BILDFIL]
 - **Exempel:** DELETE /api/products/123-ABC
 - **Svarsexempel:**
 
-```
+```json
 {
         "message": "Produkten har tagits bort."
 }
