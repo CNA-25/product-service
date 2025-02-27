@@ -177,7 +177,13 @@ router.post("/batch", async (req, res) => {
             where: { sku: { in: product_codes }     } 
         });
 
-        res.json({ products });
+        // Tillfällig hårdkodad stock
+        const productsWithStock = products.map(product => ({
+            ...product,
+            stock: 0 
+        }));
+
+        res.json({ productsWithStock });
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: "Error fetching products" });
