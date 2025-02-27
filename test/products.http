@@ -1,13 +1,11 @@
 @apiURL={{$dotenv API_URL}}
 @authToken={{$dotenv TEMP_TOKEN}}
 
-### Hämta alla produkter (Require Auth)
+### Hämta alla produkter
 GET {{apiURL}}products
-Authorization: Bearer {{authToken}}
 
-### Hämta en specifik produkt (Require Auth)
-GET {{apiURL}}products/785-GFI
-Authorization: Bearer {{authToken}}
+### Hämta en specifik produkt
+GET {{apiURL}}products/10000-FIL
 
 ### Lägg till en ny produkt (Require Auth)
 POST {{apiURL}}products
@@ -36,3 +34,12 @@ Content-Type: application/json
 ### Ta bort en produkt (Require Auth)
 DELETE {{apiURL}}products/10000-MXL
 Authorization: Bearer {{authToken}}
+
+###
+
+POST {{apiURL}}products/batch
+Content-Type: application/json
+
+{
+    "product_codes": ["10000-FIL", "10000-IES"]
+}
