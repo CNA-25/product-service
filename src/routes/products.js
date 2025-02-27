@@ -174,7 +174,7 @@ router.post("/batch", async (req, res) => {
             return { ...product, stock: inventory ? inventory.stock : 0 };
         });
 
-        res.json({ products: productsWithInventory });
+        res.status(200).json({ msg: "Produkter hämtades.", products: productsWithInventory });
     } catch (error) {
         console.error("Fel vid hämtning av produkter:", error);
         res.status(500).json({ error: "Fel vid hämtning av produkter eller lagerdata." });
