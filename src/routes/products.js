@@ -1,7 +1,7 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const axios = require("axios");
-const authorize = require("../middleware/auth");
+const authorizeAdmin = require("../middleware/authAdmin");
 const upload = require("../middleware/upload");
 const generateSKU = require("../middleware/generateSKU");
 
@@ -114,13 +114,13 @@ router.get("/:sku", async (req, res) => {
             if (inventoryResp.ok) {
                 const inventory = await inventoryResp.json();
                 const stock = inventory.stock;
-                res.status(200).json({ msg: "Produkt hämtades.", product: { ...product, stock} });
+                res.status(200).json({ msg: "Produkt hämtades.", product: { ...product, stock } });
             } else {
-                console.error("Misslyckades hämta saldo:", await inventoryResp.text())
+                console.error("Misslyckades hämta saldo:", await inventoryResp.text());
                 return res.status(500).json({ msg: "Kunde inte hämta saldo." });
             }
-            
-            
+
+
         } else {
             res.status(404).json({ msg: "Produkten hittades inte." });
         }
@@ -147,51 +147,63 @@ router.get("/:sku", async (req, res) => {
  *       201:
  *         description: Product created
  */
-router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (req, res) => {
+router.post("/", authorizeAdmin, upload.single("image"), generateSKU(prisma), async (req, res) => {
+    const { name, price, description, country, category, stock } = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // Kollar om användaren angett stock
+    if (!stock) {
+        return res.status(400).json({ msg: "Ange stock" });
+    }
+
+    // Inventory data
+    const invData = [{
+        productCode: req.body.sku,
+        stock: stock
+    }];
+
     try {
-        const { name, price, description, country, category, stock } = req.body;
-        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+        const result = await prisma.$transaction(async (tx) => {
+            // Skapa produkt i databasen
+            const product = await tx.products.create({
+                data: {
+                    sku: req.body.sku,
+                    name,
+                    price,
+                    description,
+                    image: imagePath,
+                    country,
+                    category
+                }
+            });
 
-        const data = {
-            sku: req.body.sku,
-            name,
-            price,
-            description,
-            image: imagePath,
-            country,
-            category
-        };
+            // Skapa produkt i inventory service
+            const inventoryResponse = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${req.userData.token}`
+                },
+                body: JSON.stringify(invData),
+            });
 
-        if (!stock) {
-            return res.status(400).json({ msg: "Ange stock" });
-        }
+            if (!inventoryResponse.ok) {
+                const errorText = await inventoryResponse.text();
+                console.error("Uppdatering av inventory misslyckades:", errorText);
+                throw new Error("Uppdatering av inventory misslyckades: " + errorText);
+            }
 
-        const product = await prisma.products.create({ data });
-
-        const invData = [{
-            productCode: req.body.sku,
-            stock: stock
-        }]
-
-        const inventoryResponse = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.INV_TOKEN}`
-            },
-            body: JSON.stringify(invData),
+            return product;
         });
 
-        if (!inventoryResponse.ok) {
-            console.error("Misslyckades uppdatera inventory:", await inventoryResponse.text());
-            return res.status(500).json({ msg: "Produkten skapades, men kunde inte uppdatera lagret." });
-        }
+        res.status(201).json({ msg: "Ny produkt skapades!", product: result });
 
-        res.status(201).json({ msg: "Ny produkt skapades!", product });
     } catch (error) {
+        console.error("Fel vid skapande av produkt:", error.message);
         res.status(400).json({ msg: "Fel vid skapande av produkt.", error: error.message });
     }
 });
+
 
 /**
  * @swagger
@@ -217,19 +229,19 @@ router.post("/", authorize, upload.single("image"), generateSKU(prisma), async (
  *       200:
  *         description: Product updated
  */
-router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
+router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => {
+    const { name, price, description } = req.body;
+    const data = { updated_at: new Date() };
+
+    // Uppdatera bara om användaren angett values
+    if (name && name.trim() !== "") data.name = name;
+    if (price && !isNaN(price)) data.price = price.toFixed(2);
+    if (description && description.trim() !== "") data.description = description;
+    if (req.file) {
+        data.image = `/uploads/${req.file.filename}`;
+    }
+
     try {
-        const { name, price, description } = req.body;
-        const data = { updated_at: new Date() };
-
-        if (name && name.trim() !== "") data.name = name;
-        if (price && !isNaN(price)) data.price = price.toFixed(2);
-        if (description && description.trim() !== "") data.description = description;
-
-        if (req.file) {
-            data.image = `/uploads/${req.file.filename}`;
-        }
-
         const product = await prisma.products.update({
             where: { sku: req.params.sku },
             data,
@@ -259,35 +271,37 @@ router.put("/:sku", authorize, upload.single("image"), async (req, res) => {
  *       204:
  *         description: Product deleted
  */
-router.delete("/:sku", authorize, async (req, res) => {
+router.delete("/:sku", authorizeAdmin, async (req, res) => {
+    const { sku } = req.params;
+    const delData = [{ productCode: sku }];
+
     try {
+        await prisma.$transaction(async (tx) => {
+            // Ta bort produkt från databasen
+            await tx.products.delete({
+                where: { sku },
+            });
 
-        const { sku } = req.params;
+            // Ta bort från inventory service
+            const inventoryResponse = await fetch("https://inventory-service-inventory-service.2.rahtiapp.fi/inventory", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${req.userData.token}`
+                },
+                body: JSON.stringify(delData)
+            });
 
-        await prisma.products.delete({
-            where: { sku },
+            if (!inventoryResponse.ok) {
+                const errorText = await inventoryResponse.text();
+                console.error("Borttagning av inventory misslyckades:", errorText);
+                throw new Error("Borttagning av inventory misslyckades: " + errorText);
+            }
         });
-
-        const delData = [{
-            productCode: sku
-        }]
-
-        const inventoryResponse = await fetch(`https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.INV_TOKEN}`
-            },
-            body: JSON.stringify(delData)
-        });
-
-        if (!inventoryResponse.ok) {
-            console.error("Failed to delete from inventory:", await inventoryResponse.text());
-            return res.status(500).json({ msg: "Produkten raderades, men inventory kunde inte uppdateras." });
-        }
 
         res.status(204).send();
     } catch (error) {
+        console.error("Fel vid borttagning av produkt:", error.message);
         res.status(500).json({ msg: "Fel vid borttagning av produkt.", error: error.message });
     }
 });
