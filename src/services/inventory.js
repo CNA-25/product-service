@@ -11,10 +11,10 @@ const fetchAllInventory = async () => {
     return inventoryResp.json();
 };
 
-// Hämta en eller flera items från inventory-sercvice
+// Hämta en eller flera items från inventory-service
 const fetchInventoryBatch = async (productCodes) => {
     const queryString = productCodes.map(code => `productCodes=${code}`).join("&");
-    const inventoryResp = await fetch(`${INVENTORY_URL}?${queryString}`);
+    const inventoryResp = await fetch(`${INVENTORY_URL}/?${queryString}`);
 
     if (!inventoryResp.ok) {
         throw new Error(`Failed to fetch inventory batch: ${await inventoryResp.text()}`);
