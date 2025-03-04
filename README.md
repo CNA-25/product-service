@@ -222,7 +222,7 @@ formData.append("description", "En kraftig och humlearomatisk IPA.");
 formData.append("image", fileInput.files[0]); // Byt till filen
 formData.append("stock", 5)
 
-fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products", {
+fetch(`${API_URL}/products/`, {
     method: "POST",
     headers: { Authorization: `Bearer YOUR_TOKEN_HERE` },
     body: formData,
@@ -243,7 +243,7 @@ formData.append("price", "59.99");
 formData.append("description", "Uppdaterad beskrivning.");
 formData.append("image", fileInput.files[0]); // Byt till filen
 
-fetch("https://product-service-cna-product-service.2.rahtiapp.fi/products/${sku}", {
+fetch(`${API_URL}/products/${sku}`, {
     method: "PUT",
     headers: { Authorization: `Bearer YOUR_TOKEN_HERE` },
     body: formData,
