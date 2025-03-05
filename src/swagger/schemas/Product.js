@@ -35,9 +35,7 @@ module.exports = {
             name: { type: "string", example: "Pale Ale Special Edition" },
             price: { type: "number", format: "double", example: 69.99 },
             description: { type: "string", example: "A limited edition pale ale." },
-            image: { type: "string", example: "https://example.com/special-edition.jpg" },
-            country: { type: "string", example: "Finland" },
-            category: { type: "string", example: "Pale Ale" }
+            image: { type: "string", example: "https://example.com/special-edition.jpg" }
         }
     },
 
