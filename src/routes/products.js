@@ -241,10 +241,10 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
         const { name, price, description } = req.body;
         const data = { updated_at: new Date() };
 
-        // Uppdatera endast data som angetts (annars undefined och prisma uppdaterar inte databasen)
-        if (name?.trim()) data.name = name;
+        // Uppdatera endast datan som användaren angett
+        if (name) data.name = name;
         if (price && !isNaN(price)) data.price = parseFloat(price).toFixed(2);
-        if (description?.trim()) data.description = description;
+        if (description) data.description = description;
         if (req.file) data.image = `/uploads/${req.file.filename}`;
 
         // Uppdatera produkten i databasen
