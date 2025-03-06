@@ -198,7 +198,7 @@ router.post("/", authorizeAdmin, upload.single("image"), generateSKU(prisma), as
                 data: { sku, name, price, description, image: imagePath, country, category }
             });
 
-            // Skicka inventorydata till inventory-service
+            // Skicka inventorydata till inventory-service 
             await createInventory(req.userData.token, inventoryData);
 
             return product;
@@ -241,9 +241,9 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
         const { name, price, description } = req.body;
         const data = { updated_at: new Date() };
 
-        // Uppdatera endast datan som användaren angett
+        // Uppdatera endast data som angetts (annars undefined och prisma uppdaterar inte databasen)
         if (name?.trim()) data.name = name;
-        if (!isNaN(price)) data.price = parseFloat(price).toFixed(2);
+        if (price?.trim() && !isNaN(price)) data.price = parseFloat(price).toFixed(2);
         if (description?.trim()) data.description = description;
         if (req.file) data.image = `/uploads/${req.file.filename}`;
 
