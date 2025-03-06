@@ -49,7 +49,8 @@ router.get("/", async (req, res) => {
 
         res.status(200).json({ msg: "Produkter hämtades.", products: productsWithInventory });
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid hämtning av produkter.", error: error.message });
+        res.status(500).json({ msg: "Fel vid hämtning av produkter." });
+        console.error("Router.get/: Fel vid hämtning av produkter.", error.message);
     }
 });
 
@@ -94,7 +95,8 @@ router.get("/:sku", async (req, res) => {
 
         res.status(200).json({ msg: "Produkt hämtades.", product: { ...product, stock: inventory ? inventory.stock : 0 } });
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid hämtning av produkt.", error: error.message });
+        res.status(500).json({ msg: "Fel vid hämtning av produkt." });
+        console.error("Router.get/:sku: Fel vid hämtning av produkt.", error.message);
     }
 });
 
@@ -155,6 +157,7 @@ router.post("/batch", async (req, res) => {
         res.status(200).json({ msg: "Produkter hämtades.", products: productsWithInventory });
     } catch (error) {
         res.status(500).json({ error: "Fel vid hämtning av produkter eller lagerdata." });
+        console.error("Router.post/batch: Fel vid hämtning av produkter eller lagerdata.", error.message);
     }
 });
 
@@ -204,7 +207,8 @@ router.post("/", authorizeAdmin, upload.single("image"), generateSKU(prisma), as
         res.status(201).json({ msg: "Ny produkt skapades!", product: result });
 
     } catch (error) {
-        res.status(400).json({ msg: "Fel vid skapande av produkt.", error: error.message });
+        res.status(400).json({ msg: "Fel vid skapande av produkt." });
+        console.error("Router.post/: Fel vid skapande av produkt.", error.message);
     }
 });
 
@@ -251,7 +255,8 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
 
         res.status(200).json({ msg: "Produkten uppdaterades.", product });
     } catch (error) {
-        res.status(400).json({ msg: "Fel vid uppdatering av produkt.", error: error.message });
+        res.status(400).json({ msg: "Fel vid uppdatering av produkt." });
+        console.error("Router.put/:sku: Fel vid uppdatering av produkt.", error.message);
     }
 });
 
@@ -285,7 +290,8 @@ router.delete("/:sku", authorizeAdmin, async (req, res) => {
 
         res.status(204).send();
     } catch (error) {
-        res.status(500).json({ msg: "Fel vid borttagning av produkt.", error: error.message });
+        res.status(500).json({ msg: "Fel vid borttagning av produkt." });
+        console.error("Router.delete/: Fel vid borttagning av produkt.", error.message);
     }
 });
 
