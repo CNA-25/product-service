@@ -243,7 +243,7 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
 
         // Uppdatera endast datan som användaren angett
         if (name) data.name = name;
-        if (price && !isNaN(price)) data.price = parseFloat(price).toFixed(2);
+        if (price) data.price = parseFloat(price).toFixed(2);
         if (description) data.description = description;
         if (req.file) data.image = `/uploads/${req.file.filename}`;
 
