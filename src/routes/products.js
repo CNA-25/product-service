@@ -243,7 +243,7 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
 
         // Uppdatera endast data som angetts (annars undefined och prisma uppdaterar inte databasen)
         if (name?.trim()) data.name = name;
-        if (price?.trim() && !isNaN(price)) data.price = parseFloat(price).toFixed(2);
+        if (price && !isNaN(price)) data.price = parseFloat(price).toFixed(2);
         if (description?.trim()) data.description = description;
         if (req.file) data.image = `/uploads/${req.file.filename}`;
 
