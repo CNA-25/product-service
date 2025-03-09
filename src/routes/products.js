@@ -12,20 +12,20 @@ const prisma = new PrismaClient();
  * @swagger
  * tags:
  *   name: Products
- *   description: Beer product management
+ *   description: Öl produkt hantering 
  */
 
 /**
  * @swagger
  * /products:
  *   get:
- *     summary: Get all products
+ *     summary: Hämta alla produkter
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Successful response
+ *         description: Lyckad respons
  *         content:
  *           application/json:
  *             schema:
@@ -58,7 +58,7 @@ router.get("/", async (req, res) => {
  * @swagger
  * /products/{sku}:
  *   get:
- *     summary: Get a specific product by SKU
+ *     summary: Hämta en specifik produkt med hjälp av SKU-koden
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
@@ -70,13 +70,13 @@ router.get("/", async (req, res) => {
  *           type: string
  *     responses:
  *       200:
- *         description: Successful response
+ *         description: Lyckad respons
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Product'
  *       404:
- *         description: Product not found
+ *         description: Hittar inte produkten
  */
 router.get("/:sku", async (req, res) => {
     try {
@@ -104,7 +104,7 @@ router.get("/:sku", async (req, res) => {
  * @swagger
  * /products/batch:
  *   post:
- *     summary: Get multiple products by a list of SKUs
+ *     summary: Hämta flertalet produkter med en lista av SKU-koder
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
@@ -116,7 +116,7 @@ router.get("/:sku", async (req, res) => {
  *             $ref: '#/components/schemas/BatchRequest'
  *     responses:
  *       200:
- *         description: Successful response
+ *         description: Lyckad respons
  *         content:
  *           application/json:
  *             schema:
@@ -127,9 +127,9 @@ router.get("/:sku", async (req, res) => {
  *                   items:
  *                     $ref: '#/components/schemas/Product'
  *       400:
- *         description: Invalid request. Missing or incorrect product codes.
+ *         description: Felaktig request. Saknad eller inkorrekt produktkod
  *       500:
- *         description: Error fetching products.
+ *         description: Misslyckades hämta produkter
  */
 router.post("/batch", async (req, res) => {
     try {
@@ -165,7 +165,7 @@ router.post("/batch", async (req, res) => {
  * @swagger
  * /products:
  *   post:
- *     summary: Add a new product
+ *     summary: Lägg till en ny produkt
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
@@ -177,7 +177,7 @@ router.post("/batch", async (req, res) => {
  *             $ref: '#/components/schemas/CreateProduct'
  *     responses:
  *       201:
- *         description: Product created
+ *         description: Skapad produkt
  */
 router.post("/", authorizeAdmin, upload.single("image"), generateSKU(prisma), async (req, res) => {
     try {
@@ -216,7 +216,7 @@ router.post("/", authorizeAdmin, upload.single("image"), generateSKU(prisma), as
  * @swagger
  * /products/{sku}:
  *   put:
- *     summary: Update a product by SKU
+ *     summary: Uppdaterade produkt genom SKU
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
@@ -234,7 +234,7 @@ router.post("/", authorizeAdmin, upload.single("image"), generateSKU(prisma), as
  *             $ref: '#/components/schemas/UpdateProduct'
  *     responses:
  *       200:
- *         description: Product updated
+ *         description: Produkt uppdaterad
  */
 router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => {
     try {
@@ -264,7 +264,7 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
  * @swagger
  * /products/{sku}:
  *   delete:
- *     summary: Delete a product by SKU
+ *     summary: Radera en produkt med SKU
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
@@ -276,7 +276,7 @@ router.put("/:sku", authorizeAdmin, upload.single("image"), async (req, res) => 
  *           type: string
  *     responses:
  *       204:
- *         description: Product deleted
+ *         description: Produkt raderad
  */
 router.delete("/:sku", authorizeAdmin, async (req, res) => {
     try {

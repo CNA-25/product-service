@@ -6,9 +6,9 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Beer Product API",
+            title: "Beercraft product API",
             version: "1.0.0",
-            description: "API for managing beer products.",
+            description: "API för att hantera öl produkter.",
         },
         servers: [
             {
