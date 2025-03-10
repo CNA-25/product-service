@@ -10,7 +10,11 @@ const PORT = process.env.PORT || 8080;
 app.use(cors({
     origin: [
         "http://127.0.0.1:5500",
-        /\.rahtiapp\.fi$/
+        /\.rahtiapp\.fi$/,
+        /https:\/\/users-frontend-git-cloud-native-apps-users-frontend\.2\.rahtiapp\.fi\/.*/,
+        /https:\/\/store-frontend-git-cna-25-store-frontend\.2\.rahtiapp\.fi\/.*/,
+        /https:\/\/admin-frontend-test-admin-frontend\.2\.rahtiapp\.fi\/.*/,
+        /https:\/\/admin-frontend-admin-frontend\.2\.rahtiapp\.fi\/.*/
     ]
 }));
 
