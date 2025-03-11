@@ -257,11 +257,14 @@ fetch(`${API_URL}/products/${sku}`, {
 
 ```javascript
 const countries = [
-  "Argentina", "Asien", "Belgien", "Brasilien", "Chile", "Colombia", "Danmark", "Finland", 
-  "Frankrike", "Indien", "Irland", "Italien", "Japan", "Kanada", "Kina", "Mexiko", "Nederländerna", 
-  "Norge", "Polen", "Ryssland", "Schweiz", "Serbien", "Sydafrika", "Sydkorea", "Spanien", 
-  "Storbritannien", "Tjeckien", "Tyskland", "Ungern", "USA", "Ukraina", "Vietnam", "Österrike"
+  "Argentina", "Australien", "Belgien", "Brasilien", "Chile", "Colombia", "Danmark", 
+  "Filippinerna", "Finland", "Frankrike", "Indien", "Irland", "Italien", "Japan", 
+  "Kanada", "Kina", "Mexiko", "Nederländerna", "Norge", "Nya Zeeland", "Peru", 
+  "Polen", "Ryssland", "Schweiz", "Serbien", "Spanien", "Storbritannien", "Sydafrika", 
+  "Sydkorea", "Thailand", "Tjeckien", "Tyskland", "Ukraina", "Ungern", "USA", "Vietnam", 
+  "Österrike"
 ];
+
 
 const categories = [
   "Ale", "IPA", "Lager", "Pilsner", "Stout & Porter", "Suröl & Specialöl", "Veteöl"
